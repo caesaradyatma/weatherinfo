@@ -1,0 +1,41 @@
+body {
+    background-image: url('../img/background.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    min-height: 100%;
+}
+
+html {
+    min-height: 100%;
+}
+
+.the_temp{
+    color:white;
+}
+
+.min_temp{
+    /* font-color:rgb(30, 83, 197); */
+    color:rgb(21, 97, 168);
+    
+}
+
+.max_temp{
+    color:rgb(226, 91, 12);
+}
+
+.section-form{
+    margin-top:20px;
+}
+
+.card{
+    background-color:rgba(9, 55, 70, 0.075);
+}
+
+.day{
+    color:white;
+    text-align:center;
+}
+
+

@@ -5,71 +5,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>What's the weather like?</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <title>Weather Info App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="/assets/css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    What's the weather like?
-                </h1>
-            </div>
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-offset-4 is-4">
-                    <form method="POST">
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input" name="city_name" type="text" placeholder="City Name">
-                            </div>
-                            <div class="control">
-                                <button class="button is-info">
-                                    Add City
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+<!-- form section -->
+    <section class="section-form">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <center>
+                        <h1 class="the_temp">Weather Info Application</h1>
+                    </center>
+                </div>
+                <div class="col-sm-12">
+                    <center>
+                        <form method="POST">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input class="form-control" name="city_name" type="text" placeholder="City Name">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default">
+                                            Search City
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <center><a href="/dashboard" class="day">Dashboard</a></center>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </center>
                 </div>
             </div>
+            
         </div>
     </section>
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-offset-4 is-4">
-                    
-                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="#" alt="Image">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <span class="title"></span>
-                                        <br>
-                                        <span class="subtitle"></span>
-                                        <br> 
-                                    </p>
+    <!-- if city data is found, display the html below -->
+    <%if (weather_array.length > 0) { %>
+    
+        <!-- the weather information during the current day section -->
+        <section class="section-day">
+            <div class="container-fluid">
+                <div class="row" >
+                    <div class='col-sm-12'>
+                        <center>
+                        <table>
+                            <tr>
+                                <!-- current temperature -->
+                                <td colspan="3"><h2 class="the_temp"><%= weather_array[0].the_temp %>&#8451</h2></td>
+                                <!-- weather icon -->
+                                <td rowspan="2"><img src="https://www.metaweather.com/static/img/weather/<%= weather_array[0].weather_state_abbr %>.svg" style="height:100%;width:100%" alt="Image"></td>
+                                <!-- name of city -->
+                                <td><center><h1 style="color:white;"><%= weather_array[0].city %></h1></center></td>
+                            </tr>
+                            <tr>
+                                <!-- minmum temperature -->
+                                <td><h5 class="min_temp"><%= weather_array[0].min_temp %>&#8451</h5></td>
+                                <td><h5>/</h5></td>
+                                <!-- maximum temperature -->
+                                <td><h5 class="max_temp"><%= weather_array[0].max_temp %>&#8451</h5></td>
+                            </tr>
+                            
+                            <tr>
+                                <!-- weather state name -->
+                                <td colspan="5"><center><h2 style="color:white;"><%= weather_array[0].weather_state_name %></h2></center></td>
+                            </tr>
+                        </table>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- weather forecast section of the next 6 days -->
+        <section class="section-forecast">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-11">
+                        <!-- wind information -->
+                        <p class="the_temp">Wind <%= weather_array[0].wind_speed %> Mph <%= weather_array[0].wind_direction_compass %></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-1">
+                    </div>
+                    <!-- loop through the weather_array data to access information on each day and display it-->
+                    <% for( x=1; x<6; x++) { %>
+                        <div class="col-sm-2">
+                            <!-- bootstrap card -->
+                            <div class="card" style="margin-bottom:20px;">
+                                <div class="panel-body">
+                                    <div class="card-heading">
+                                        <!-- forecast day -->
+                                        <p class="day"><%= weather_array[x].applicable_date %></p>
+                                        <hr>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <center>
+                                                    <table>
+                                                        <tr>
+                                                            <td rowspan="2">
+                                                                <!-- weather icon -->
+                                                                <img src="https://www.metaweather.com/static/img/weather/<%= weather_array[x].weather_state_abbr%>.svg" style="height:80px;width:80px" alt="Image">
+                                                            </td>
+                                                            <td>
+                                                                <!-- forecasted maximum temperature -->
+                                                                <p class="max_temp">
+                                                                    <%= weather_array[x].max_temp %>&#8451
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <!-- forecasted minimum temperature -->
+                                                                <p class="min_temp">
+                                                                    <%= weather_array[x].min_temp %>&#8451
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </article>
+                        </div>
+                    <% } %>
+                    <!-- end for loop -->
+                    <div class="col-sm-1">
+                        
                     </div>
-                    
                 </div>
             </div>
-        </div>
-    </section>
-    <footer class="footer">
-    </footer>
+        </section>
+        <!-- else if weather_array is empty return city data does not exist -->
+    <% } else{ %>
+        <h1>City Data Does Not Exist</h1>
+    <% } %>
+    
 </body>
 
 </html>
