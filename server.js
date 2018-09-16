@@ -12,6 +12,15 @@ app.set('view engine','ejs');
 app.use(bodyParser.urlencoded({ extended : true}));
 app.use(express.static(__dirname + '/public'));
 
+//days of week array
+var weekday = new Array(7);
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
 
 //connect to mongo db
 mongoose.connect('mongodb://user:password12@ds157422.mlab.com:57422/weatherinfo'), { useNewUrlParser: true};
@@ -92,15 +101,6 @@ app.post('/',function(req, res){
             
         })
         .then(function (details) {
-            //initialize weekdays variable to be displayed
-            var weekday = new Array(7);
-            weekday[0] = "Sunday";
-            weekday[1] = "Monday";
-            weekday[2] = "Tuesday";
-            weekday[3] = "Wednesday";
-            weekday[4] = "Thursday";
-            weekday[5] = "Friday";
-            weekday[6] = "Saturday";
 
             //initialize weather array to be passed to the weather.ejs
             weather_array = [];
@@ -154,16 +154,10 @@ app.get('/', function(req,res) {
             return request_promise(options2);
         })
         .then(function (details){
-            var weekday = new Array(7);
-            weekday[0] = "Sunday";
-            weekday[1] = "Monday";
-            weekday[2] = "Tuesday";
-            weekday[3] = "Wednesday";
-            weekday[4] = "Thursday";
-            weekday[5] = "Friday";
-            weekday[6] = "Saturday";
+            
             weather_array = [];
             for(x =0;x<6;x++){
+                
                 var mydate = new Date(details.consolidated_weather[x].applicable_date);
                 var weather = {
                     city: city,
@@ -175,7 +169,7 @@ app.get('/', function(req,res) {
                     min_temp: Number(details.consolidated_weather[x].min_temp).toFixed(1),
                     wind_speed: Number(details.consolidated_weather[x].wind_speed).toFixed(1),
                     wind_direction_compass: details.consolidated_weather[x].wind_direction_compass,
-                    applicable_date: weekday[mydate.getDay()]
+                    applicable_date: weekday[mydate.getDay()]//get day
                 }
                 weather_array.push(weather);
             }
