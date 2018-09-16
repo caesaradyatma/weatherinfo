@@ -26,17 +26,33 @@
         <div class='container-fluid'>
             
             <div class="row">
-                <% for( x=0; x<weather_data.length; x++) { %>
-                    <div class="col-sm-2">
-                        <div class="card" style="margin-bottom:20px;">
-                            <div class="panel-body">
-                                <div class="card-body">
-                                    <h3 class="the_temp"><%= weather_data[x].name%></h3>
+                <%if (weather_data.length > 0) { %>
+
+                    <% for( x=0; x<weather_data.length; x++) { %>
+                        <div class="col-sm-2">
+                            <div class="card" style="margin-bottom:20px;">
+                                <div class="panel-body">
+                                    <div class="card-body">
+                                        <h3 class="the_temp"><%= weather_data[x].name%></h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <% } %>
+
+                <% } else{ %>
+                    <div class="col-sm-12">
+                            <div class="card" style="margin-bottom:20px;">
+                                <div class="panel-body">
+                                    <div class="card-body">
+                                        <h3 class="the_temp">You have not searched any city yet</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                 <% } %>
+                
             </div>
             
         </div>
